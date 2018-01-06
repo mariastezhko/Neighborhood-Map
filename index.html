@@ -4,19 +4,31 @@
     <meta charset="utf-8">
     <title>Neighborhood Map</title>
     <link rel="stylesheet" href="static/css/styles.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
   </head>
   <body>
-    <div id="container">
-      <div id="places-list">
-        <ul data-bind="foreach: locationList">
+    <div class="wrapper">
+
+
+      <nav id="sidebar" >
+        <button type="button" id="sidebar-toggle" class="btn">
+        <i class="glyphicon glyphicon-align-left"></i>
+        Toggle Sidebar
+        </button>
+        <input id="search-box" type="text" data-bind="value: searchInput, valueUpdate: 'keyup'">
+        <ul data-bind="foreach: filteredItems">
   				<li data-bind="text: title, click: listClicked"></li>
   			</ul>
-      </div>
-      <div id="map">
-      <div>
-    </div>
+      </nav>
+      <div id="map" >
 
+
+    </div>
+  </div>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="js/lib/knockout-3.4.2.js"></script>
     <script src="js/app.js"></script>
     <script src="js/locations.js" charset="utf-8"></script>

@@ -8,12 +8,17 @@ html, body {
 #map {
   bottom: 0px;
   height: 100%;
-  left: 362px;
-  position: absolute;
+  left: 0px;
+  position: relative;
   right: 0px;
+  z-index: -1;
 }
 
-#places-list {
+.wrapper {
+  height: 100%;
+}
+
+#sidebar {
   background: #fff;
   border: 1px solid #999;
   border-radius: 3px;
@@ -21,5 +26,14 @@ html, body {
   line-height: 35px;
   padding: 10px 10px 30px 10px;
   text-align: left;
-  width: 340px;
+  width: 300px;
+  position: absolute;
+}
+
+.sidebar-hide {
+  margin-left: -250px;
+}
+
+.btn {
+  margin-left: 200px;
 }

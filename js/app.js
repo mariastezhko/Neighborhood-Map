@@ -5,6 +5,13 @@ var map;
 var clientID = 'IYUJHZXT1R3ATZJOWVZC5EFRXKW40XZSCUM0BYHDR25JNVOS';
 var clientSecret = 'YN5ETU0EMHHUHWQLR4QRBCVOSMKBOLNX5UJW2PV2CI1EF3PW';
 
+// Toggle sidebar
+$(document).ready(function () {
+    $('#sidebar-toggle').on('click', function () {
+        $('#sidebar').toggleClass('sidebar-hide');
+    });
+});
+
 // Initialize Google Map.
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -100,7 +107,23 @@ var viewModel = function() {
       self.listItems.push( new Location(locationName) );
     });
 
-    
+    this.filteredItems = ko.computed(function() {
+      var searchString = self.searchInput().toLowerCase();
+      if (searchString) {
+        return ko.utils.arrayFilter(self.listItems(), function(locationName) {
+            var match = locationName.title.toLowerCase().indexOf(searchString) >= 0;
+            locationName.visible(match);
+            console.log("***", locationName);
+            return match;
+        });
+      } else {
+          console.log(self.listItems());
+          self.listItems().forEach(function(locationName) {
+          locationName.visible(true);
+        });
+        return self.listItems();
+      }
+    }, self);
 
 }
 
