@@ -5,13 +5,6 @@ var map;
 var clientID = 'IYUJHZXT1R3ATZJOWVZC5EFRXKW40XZSCUM0BYHDR25JNVOS';
 var clientSecret = 'YN5ETU0EMHHUHWQLR4QRBCVOSMKBOLNX5UJW2PV2CI1EF3PW';
 
-// Toggle sidebar
-$(document).ready(function () {
-    $('#sidebar-toggle').on('click', function () {
-        $('#sidebar').toggleClass('sidebar-hide');
-    });
-});
-
 // Initialize Google Map.
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -28,6 +21,7 @@ function initMap() {
 var Location = function(data) {
   var self = this;
   var defaultIcon = makeMarkerIcon('0091ff');
+  var highlightedIcon = makeMarkerIcon('FFFF24');
 
   this.position = data.location;
   this.lat = data.location.lat;
@@ -36,6 +30,7 @@ var Location = function(data) {
   this.category = "";
   this.street = "";
   this.city = "";
+  this.foursquareAlert = "";
 
   // All the location markers are initially visible.
   // Visibility is subject to change using a filter.
@@ -53,7 +48,9 @@ var Location = function(data) {
       self.street = result.response.venues[0].location.address;
       self.city = result.response.venues[0].location.formattedAddress[1];
       //console.log('result', result);
-   });
+   }).fail(function(e){
+          self.foursquareAlert = "Couldn't load Foursquare data. Please refresh your page to try again.";
+     });
 
   // Create a marker for the location.
   this.marker = new google.maps.Marker({
@@ -71,21 +68,34 @@ var Location = function(data) {
       } else {
           this.marker.setMap(null);
       }
-      return true
+      return true;
    }, this);
 
    // When a marker is clicked, open the information window
    // and bounce a marker one time.
+   // If there was an issue with loading Foursquare data,
+   // display the alert window.
    this.marker.addListener('click', function() {
-      self.contentString = '<div class="info-window"><p class="title"><b>' + self.title + '</b></p>' +
+     console.log(self.foursquareAlert);
+      if (self.foursquareAlert) {
+        alert(self.foursquareAlert);
+      }
+      self.content = '<div class="info-window"><p class="title"><b>' + self.title + '</b></p>' +
            '<p>' + self.category + '</p>' + '<p>' + self.street + '</p>' + '<p>' + self.city + '</p></div>';
-           //console.log(self.contentString);
-      infoWindow = new google.maps.InfoWindow({content: self.contentString});
+      console.log(self.content);
+      infoWindow = new google.maps.InfoWindow({content: self.content});
       infoWindow.open(map, this);
       self.marker.setAnimation(google.maps.Animation.BOUNCE);
       setTimeout(function() {
           self.marker.setAnimation(null);
       }, 750);
+   });
+
+   this.marker.addListener('mouseover', function() {
+     self.marker.setIcon(highlightedIcon);
+   });
+   this.marker.addListener('mouseout', function() {
+     self.marker.setIcon(defaultIcon);
    });
 
    // When a location in the list view is clicked,
@@ -125,11 +135,9 @@ var viewModel = function() {
       }
     }, self);
 
-}
+};
 
-// This function takes in a COLOR, and then creates a new marker
-// icon of that color. The icon will be 21 px wide by 34 high, have an origin
-// of 0, 0 and be anchored at 10, 34).
+// Create a new marker of a specific color.
 function makeMarkerIcon(markerColor) {
     var markerImage = new google.maps.MarkerImage(
         'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
@@ -140,3 +148,15 @@ function makeMarkerIcon(markerColor) {
         new google.maps.Size(21, 34));
     return markerImage;
 }
+
+// Handle Google Map errors
+function googleMapError() {
+  alert("Couldn't load Google Maps.");
+}
+
+// Toggle sidebar
+$(document).ready(function () {
+    $('#sidebar-toggle').on('click', function () {
+        $('#sidebar').toggleClass('sidebar-hide');
+    });
+});
