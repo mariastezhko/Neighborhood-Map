@@ -1,4 +1,4 @@
-# Neighborhood Map
+# Neighborhood Map (Udacity Full Stack Nanodegree Course Project)
 
 - - - -
 
@@ -13,6 +13,8 @@ Key features of `Neighborhood Map` include:
 - Usage of Knockout Framework for data binding
 - Implementation of AJAX requests to third-party servers
 - Responsive design
+
+[Live version](https://mariastezhko.github.io)
 
 ## Installation and Usage Instructions
 
