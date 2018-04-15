@@ -3,9 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Neighborhood Map</title>
-    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/bootstrap.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
@@ -22,19 +21,19 @@
         <ul data-bind="foreach: filteredItems">
   				<li data-bind="text: title, click: listClicked"></li>
   			</ul>
+        <p>Powered by Foursquare</p>
       </nav>
 
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="js/lib/jquery-3.1.0.min.js"></script>
     <script src="js/lib/knockout-3.4.2.js"></script>
     <script src="js/app.js"></script>
     <script src="js/locations.js" charset="utf-8"></script>
 
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBebk9Y71UREa0DtUb9zxwjH4i9vaJDIEM&v=3&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBebk9Y71UREa0DtUb9zxwjH4i9vaJDIEM&v=3&callback=initMap"
+        onerror="googleMapError()">
     </script>
-
   </body>
 
 </html>
