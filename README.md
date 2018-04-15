@@ -16,7 +16,7 @@ Key features of `Neighborhood Map` include:
 - Implementation of AJAX requests to third-party servers
 - Responsive design
 
-[Live version](https://mariastezhko.github.io)
+[Live version](https://mariastezhko.github.io/Neighborhood-Map/)
 
 ## Installation and Usage Instructions
 
